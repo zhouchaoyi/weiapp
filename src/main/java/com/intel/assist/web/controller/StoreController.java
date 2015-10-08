@@ -72,13 +72,14 @@ public class StoreController {
         if(StringUtils.isNotEmpty(remark)) {
             remark= URLDecoder.decode(remark,"UTF-8");
         }
+        String picUrl=WebUtils.getStringValue(request, "picUrl", false);
 
         /*System.out.println("goodsNm="+goodsNm);
         System.out.println("goodsType="+goodsType);
         System.out.println("goodsPrice="+goodsPrice);
         System.out.println("lowPrice="+lowPrice);*/
 
-        storeService.addGoods(goodsNm,goodsType,goodsPrice,lowPrice,remark);
+        storeService.addGoods(goodsNm,goodsType,goodsPrice,lowPrice,remark,picUrl);
         json.put("data","");
         json.put("status", CommonUtils.getSubStatus("获取数据成功！"));
         return json.toString();
@@ -108,8 +109,9 @@ public class StoreController {
             remark= URLDecoder.decode(remark,"UTF-8");
         }
         String goodsId = WebUtils.getStringValue(request, "goodsId",true);
+        String picUrl=WebUtils.getStringValue(request, "picUrl", false);
 
-        storeService.modifyGoods(goodsNm, goodsType, goodsPrice, lowPrice, remark, goodsId);
+        storeService.modifyGoods(goodsNm, goodsType, goodsPrice, lowPrice, remark, goodsId,picUrl);
         json.put("data","");
         json.put("status", CommonUtils.getSubStatus("获取数据成功！"));
         return json.toString();

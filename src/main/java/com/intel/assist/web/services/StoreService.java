@@ -37,10 +37,10 @@ public class StoreService extends BaseServices{
      *
      * @return
      */
-    public void addGoods(String goodsNm,String goodsType,String goodsPrice,String lowPrice,String remark) {
-        String sql=new StringBuilder("insert into goods_info (goods_name,type_id,goods_price,low_price,remark) values (?,?,?,?,?)")
+    public void addGoods(String goodsNm,String goodsType,String goodsPrice,String lowPrice,String remark,String picUrl) {
+        String sql=new StringBuilder("insert into goods_info (goods_name,type_id,goods_price,low_price,remark,pic_url) values (?,?,?,?,?,?)")
                 .toString();
-        baseDaoUtil.executeUpdate(sql,new Object[]{goodsNm,goodsType,goodsPrice,lowPrice,remark});
+        baseDaoUtil.executeUpdate(sql,new Object[]{goodsNm,goodsType,goodsPrice,lowPrice,remark,picUrl});
     }
 
     /**
@@ -48,10 +48,10 @@ public class StoreService extends BaseServices{
      *
      * @return
      */
-    public void modifyGoods(String goodsNm,String goodsType,String goodsPrice,String lowPrice,String remark,String goodsId) {
-        String sql=new StringBuilder("update goods_info set goods_name=?,type_id=?,goods_price=?,low_price=?,remark=? where goods_id=?")
+    public void modifyGoods(String goodsNm,String goodsType,String goodsPrice,String lowPrice,String remark,String goodsId,String picUrl) {
+        String sql=new StringBuilder("update goods_info set goods_name=?,type_id=?,goods_price=?,low_price=?,remark=?,pic_url=? where goods_id=?")
                 .toString();
-        baseDaoUtil.executeUpdate(sql,new Object[]{goodsNm,goodsType,goodsPrice,lowPrice,remark,goodsId});
+        baseDaoUtil.executeUpdate(sql,new Object[]{goodsNm,goodsType,goodsPrice,lowPrice,remark,picUrl,goodsId});
     }
 
     /**
@@ -74,7 +74,7 @@ public class StoreService extends BaseServices{
         JSONObject result=new JSONObject();
         int index=(currentPage -1 ) * pageSize;
         List<Object> objectList = new ArrayList<Object>();
-        StringBuilder sql = new StringBuilder("select a.goods_id,a.type_id,b.type_nm,a.goods_name,a.goods_price,b.type_nm,a.low_price,a.remark from goods_info a ")
+        StringBuilder sql = new StringBuilder("select a.goods_id,a.type_id,b.type_nm,a.goods_name,a.goods_price,b.type_nm,a.low_price,a.remark,a.pic_url from goods_info a ")
                 .append(" left join goods_type b on a.type_id=b.type_id where 1=1 ");
         if(StringUtils.length(type_id)>0) {
             sql.append(" and a.type_id=? ");
